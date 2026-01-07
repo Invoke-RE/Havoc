@@ -271,14 +271,12 @@ func (b *Builder) Build() bool {
 	}
 
 	// enable debug mode
-	if b.compilerOptions.Config.DebugDev {
-		b.compilerOptions.Defines = append(b.compilerOptions.Defines, "DEBUG")
+	//if b.compilerOptions.Config.DebugDev {
+		//b.compilerOptions.Defines = append(b.compilerOptions.Defines, "DEBUG")
+	if b.FileType == FILETYPE_WINDOWS_SERVICE_EXE {
+		b.compilerOptions.CFlags[0] = "-mwindows -ladvapi32"
 	} else {
-		if b.FileType == FILETYPE_WINDOWS_SERVICE_EXE {
-			b.compilerOptions.CFlags[0] = "-mwindows -ladvapi32"
-		} else {
-			b.compilerOptions.CFlags[0] += " -nostdlib -mwindows"
-		}
+		b.compilerOptions.CFlags[0] += " -nostdlib -mwindows"
 	}
 
 	// add compiler
